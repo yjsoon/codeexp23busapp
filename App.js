@@ -38,6 +38,10 @@ export default function App() {
 
   useEffect(() => {
     loadBusstopData();
+
+    const interval = setInterval(loadBusstopData, 2000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -46,7 +50,12 @@ export default function App() {
       <Text style={styles.arrivalTimeText}>
         {loading ? <ActivityIndicator size="large" /> : arrivalTime}
       </Text>
-      <Pressable style={styles.button} onPress={() => {}}>
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          setTimeout(loadBusstopData, 500);
+          setLoading(true);
+        }}>
         <Text style={styles.buttonText}>Refresh</Text>
       </Pressable>
     </View>
